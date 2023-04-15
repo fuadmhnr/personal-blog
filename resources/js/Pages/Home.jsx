@@ -1,10 +1,12 @@
 import React from "react";
 import App from "@/Layouts/App";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import Container from "@/Components/Container";
 import Header from "@/Components/Header";
+import Grid from "@/Components/Grid";
+import ArticleBlock from "@/Components/ArticleBlock";
 
-export default function Home() {
+export default function Home({ articles }) {
     return (
         <div>
             <Head title={"Home Page"} />
@@ -19,7 +21,20 @@ export default function Home() {
                     and techniques to help you stay ahead of the curve
                 </Header.Content>
             </Header>
-            <Container>Home</Container>
+            <Container>
+                {articles.length ? (
+                    <Grid>
+                        {articles.map((article) => (
+                            <ArticleBlock
+                                article={article}
+                                key={article.slug}
+                            />
+                        ))}
+                    </Grid>
+                ) : (
+                    <p>No articles yet.</p>
+                )}
+            </Container>
         </div>
     );
 }
