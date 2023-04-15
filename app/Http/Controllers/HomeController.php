@@ -17,6 +17,7 @@ class HomeController extends Controller
             ->select('title', 'slug', 'user_id', 'teaser', 'created_at', 'id')
             ->with(['tags' => fn($tag) => $tag->select('name', 'slug')])
             ->limit(9)
+            ->latest()
             ->get();
         return inertia('Home', ['articles' => ArticleItemResource::collection($articles)]);
     }
