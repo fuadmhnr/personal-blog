@@ -13,12 +13,14 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Work Sans', ...defaultTheme.fontFamily.sans],
+                mono: ['JetBrains Mono', ...defaultTheme.fontFamily.sans]
             },
         },
     },
 
     plugins: [
         require('@tailwindcss/forms'),
-        require('@tailwindcss/line-clamp')
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/typography')
     ],
 };

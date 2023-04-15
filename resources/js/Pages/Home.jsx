@@ -1,6 +1,6 @@
 import React from "react";
 import App from "@/Layouts/App";
-import { Head, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import Container from "@/Components/Container";
 import Header from "@/Components/Header";
 import Grid from "@/Components/Grid";
@@ -22,15 +22,25 @@ export default function Home({ articles }) {
                 </Header.Content>
             </Header>
             <Container>
+                <h1 className="text-2xl font-bold mb-8">My latest articles</h1>
+
                 {articles.length ? (
-                    <Grid>
-                        {articles.map((article) => (
-                            <ArticleBlock
-                                article={article}
-                                key={article.slug}
-                            />
-                        ))}
-                    </Grid>
+                    <>
+                        <Grid>
+                            {articles.map((article) => (
+                                <ArticleBlock
+                                    article={article}
+                                    key={article.slug}
+                                />
+                            ))}
+                        </Grid>
+                        <Link
+                            className="text-blue-600 block mt-10"
+                            href={route("articles.index")}
+                        >
+                            Show more articles...
+                        </Link>
+                    </>
                 ) : (
                     <p>No articles yet.</p>
                 )}
