@@ -46,7 +46,7 @@ export default function Navigation() {
                             <div className="flex items-center">
                                 {auth.user ? (
                                     <div className="flex items-center">
-                                        <DropdownMenu label="Irsyad A. Panjaitan">
+                                        <DropdownMenu label={auth.user.name}>
                                             <DropdownMenu.Link
                                                 href={route("dashboard")}
                                             >
@@ -58,14 +58,13 @@ export default function Navigation() {
                                             <DropdownMenu.Link href={"#"}>
                                                 Settings
                                             </DropdownMenu.Link>
-                                            <DropdownMenu.Link href={"#"}>
+                                            <DropdownMenu.Link
+                                                href={route("articles.create")}
+                                            >
                                                 New article
                                             </DropdownMenu.Link>
                                             <DropdownMenu.Link href={"#"}>
                                                 My articles
-                                            </DropdownMenu.Link>
-                                            <DropdownMenu.Link href={"#"}>
-                                                New article
                                             </DropdownMenu.Link>
                                             <DropdownMenu.Link
                                                 href={route("logout")}
