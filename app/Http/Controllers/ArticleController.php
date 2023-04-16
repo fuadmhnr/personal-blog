@@ -52,7 +52,20 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $picture = $request->file('picture');
+      $article = $request->user()->articles()->create([
+        'title' => $title = $request->title,
+        'slug' => $slug = str($title)->slug(),
+        'teaser' => $request->teaser,
+        'category_id' => $request->category_id,
+        'body' => $request->body,
+        'picture' => $request->hasFile('picture') ? $picture->storeAs('articles/images', $slug . '.' . $picture->extension()) : null,
+      ]);
+
+      $article->tags()->attach($request->tags);
+
+      return to_route('articles.show', $article);
+
     }
 
     /**
@@ -60,9 +73,12 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return inertia('Articles/Show', [
-            'article' => new ArticleSingleResource($article)
-        ]);
+      return inertia('Articles/Show', [
+          'article' => new ArticleSingleResource($article->load([
+            'tags' => fn($query) => $query->select('name', 'slug'),
+            'category' => fn($query) => $query->select('id', 'name', 'slug')
+          ]))
+      ]);
     }
 
     /**

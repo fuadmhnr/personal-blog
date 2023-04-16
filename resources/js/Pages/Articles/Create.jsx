@@ -11,9 +11,10 @@ import Editor from "@/Components/Editor";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Select from "@/Components/Select";
 import MultipleSelect from "@/Components/MultipleSelect";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function Create({ tags, categories }) {
-    const { data, setData, post, errors } = useForm({
+    const { data, setData, errors } = useForm({
         title: "",
         teaser: "",
         body: "",
@@ -26,7 +27,11 @@ export default function Create({ tags, categories }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
+        Inertia.post(route("articles.store"), {
+            ...data,
+            category_id: data.category_id.id,
+            tags: data.tags.map((t) => t.id),
+        });
     };
 
     return (
